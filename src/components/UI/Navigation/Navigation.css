@@ -1,0 +1,8 @@
+.navbar-brand div {
+    display: inline-block;
+    padding: .4rem 1rem;
+}
+
+.empty {
+    height: 100px;
+}
