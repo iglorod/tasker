@@ -1,0 +1,49 @@
+.label {
+    font-family: 'Raleway', sans-serif;
+    margin-top: 20px;
+}
+
+.createTaskLabel {
+    padding-top: 20px;
+    text-align: center;
+    font-family: 'Raleway', sans-serif;
+}
+
+.listItem {
+    display: flex;
+    align-items: baseline;
+}
+
+.manageItems {
+    display: flex;
+    justify-content: space-between;
+    user-select: none;
+}
+
+.manageItems .addItem {
+    color: green;
+    cursor: pointer;
+}
+
+.manageItems .addItem:hover {
+    opacity: .8;
+    transition: all .3s;
+}
+
+.manageItems .removeItem {
+    color: darkred;
+    cursor: pointer;
+}
+
+.listItem > input {
+    border: none;
+    outline: none;
+    box-shadow: none !important;
+}
+
+.button {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    width: 100%;
+    outline: none;
+}

@@ -8,19 +8,19 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 
 import authReducer from './store/reducers/authorization';
+import taskReducer from './store/reducers/tasks';
 
 const reducers = combineReducers({
   auth: authReducer,
+  task: taskReducer,
 })
 
 const store = createStore(reducers, applyMiddleware(thunk));
 
 ReactDOM.render(
-  <React.StrictMode>
     <Provider store={store}>
       <App />
-    </Provider>
-  </React.StrictMode>,
+    </Provider>,
   document.getElementById('root')
 );
 

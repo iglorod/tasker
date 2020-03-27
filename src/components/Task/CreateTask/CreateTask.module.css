@@ -1,0 +1,14 @@
+.inputsBlock {
+    margin-bottom: 20px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 0 15px -8px;
+}
+
+@media (max-width: 575px) {
+    .inputsBlock {
+        box-shadow: none;
+        border-radius: 0px;
+    }
+}
+

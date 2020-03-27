@@ -1,0 +1,38 @@
+.leaveIcon {
+    position: absolute;
+    right: 0;
+    margin-right: 1.25rem;
+    outline: none !important;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+}
+
+.leaveIcon:hover {
+    color: rgb(151, 151, 151);
+    transition: all .3s;
+}
+
+.popoverItem {
+    padding: 10px 15px;
+    color: rgb(153, 153, 153);
+    cursor: pointer;
+}
+
+.popoverItem:hover {
+    background: whitesmoke;
+    transition: all .3s;
+}
+
+.popoverItem svg {
+    position: relative;
+    margin-right: 0.25rem;
+}
+
+.popoverBody {
+    padding: 0;
+}
+
+hr {
+    margin: 0;
+}

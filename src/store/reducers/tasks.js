@@ -17,6 +17,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_TASKS: {
             return {
                 ...state,
+                fetching: false,       
                 tasks: [...action.tasks]
             }
         }

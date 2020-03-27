@@ -1,0 +1,9 @@
+.cardTitle {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cardTitle a {
+    color: #000 !important;
+}

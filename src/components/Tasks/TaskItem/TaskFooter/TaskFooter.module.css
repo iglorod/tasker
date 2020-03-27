@@ -1,0 +1,12 @@
+.cardBottomText {
+    font-size: 10px;
+    position: absolute;
+    width: calc(100% - 2.5rem);
+    display: flex;
+    justify-content: space-between;
+    bottom: 10px;
+}
+
+.cardBottomText svg {
+    vertical-align: unset;
+}
