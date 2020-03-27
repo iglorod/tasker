@@ -11,4 +11,5 @@ export const LOGOUT = 'LOGOUT';
 //tasks
 export const FETCH_START = 'FETCH_START';
 export const FETCH_TASKS = 'FETCH_TASKS';
+export const LEAVE_TASK = 'LEAVE_TASK';
 

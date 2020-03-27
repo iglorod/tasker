@@ -9,7 +9,7 @@ import Description from '../TaskComponents/Description/Description';
 import Instructions from '../TaskComponents/Instructions/Instructions';
 import Button from '../TaskComponents/Button/Button';
 import ColHOC from '../../UI/ColHOC/ColHOC';
-import AlertMessage from '../../UI/AlertMessage/AlertMessage';
+import AlertMessage from '../../UI/Alerts/AlertMessage/AlertMessage';
 import classes from './CreateTask.module.css';
 
 const CreateTask = (props) => {

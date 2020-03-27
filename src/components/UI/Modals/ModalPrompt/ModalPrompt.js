@@ -15,13 +15,13 @@ const ModalPrompt = (props) => {
     }
 
     const confirmHandler = () => {
-        props.shareTask(inputValue);
+        props.onConfirm(inputValue);
         modalCloseHandler();
     }
 
     return (
         <React.Fragment>
-            <Modal show={props.show} onHide={props.hideModal}>
+            <Modal show={props.show} onHide={modalCloseHandler}>
                 <Modal.Header closeButton>
                     <Modal.Title>{props.title}</Modal.Title>
                 </Modal.Header>

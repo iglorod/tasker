@@ -1,7 +1,7 @@
 import React from 'react';
 import { Alert } from 'react-bootstrap';
 
-const AlertDismiss = (props) => {
+const AlertResult = (props) => {
     if (props.result.message) {
         return (
             <Alert variant={props.result.error ? 'danger' : 'success'} onClose={props.hideAlert} dismissible>
@@ -13,4 +13,4 @@ const AlertDismiss = (props) => {
     return null;
 }
 
-export default AlertDismiss;
+export default AlertResult;

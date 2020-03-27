@@ -8,7 +8,7 @@ import Tasks from '../Tasks/Tasks';
 import CreateTask from '../Task/CreateTask/CreateTask';
 import EditTask from '../Task/EditTask/EditTask';
 import Navigation from '../UI/Navigation/Navigation';
-import ModalSpinner from '../UI/ModalSpinner/ModalSpinner';
+import ModalSpinner from '../UI/Modals/ModalSpinner/ModalSpinner';
 import { autoLogin } from '../../utility/auto-login';
 import { signInLocalAction, refreshTokenAction } from '../../store/actions/authorization';
 import { finishLoadingActionCreator } from '../../store/actions/authorization';

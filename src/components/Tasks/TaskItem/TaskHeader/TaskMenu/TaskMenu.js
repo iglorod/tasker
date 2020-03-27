@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDoorOpen, faEllipsisV, faShareSquare } from '@fortawesome/free-solid-svg-icons';
@@ -6,25 +6,31 @@ import { faDoorOpen, faEllipsisV, faShareSquare } from '@fortawesome/free-solid-
 import classes from './TaskMenu.module.css';
 
 const TaskMenu = (props) => {
-    const shareTaskHandler = (event) => {
+    const [showPopover, setShowPopover] = useState(false);
+
+    const clickHandler = (func, event) => {
         event.stopPropagation();
-        props.openShareTaskModal();
+        func();
     }
 
     return (
         <OverlayTrigger
             trigger={'focus'}
+            delay={100}
+            rootCloseEvent={'click'}
             placement={'bottom'}
             overlay={
                 <Popover>
                     <Popover.Content className={classes.popoverBody}>
                         <div
                             className={classes.popoverItem}
-                            onClick={shareTaskHandler}>
+                            onClick={clickHandler.bind(this, props.openShareTaskModal)}>
                             <FontAwesomeIcon className={classes.leaveIcon} icon={faShareSquare} /> Share task
                         </div>
                         <hr></hr>
-                        <div className={classes.popoverItem}>
+                        <div
+                            className={classes.popoverItem}
+                            onClick={clickHandler.bind(this, props.openLeaveTaskModal)}>
                             <FontAwesomeIcon className={classes.leaveIcon} icon={faDoorOpen} /> Leve task
                         </div>
                     </Popover.Content>

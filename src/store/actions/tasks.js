@@ -14,12 +14,28 @@ export const fetchTasksActionCreator = (tasks) => {
     }
 }
 
+export const leaveTaskActionCreator = (taskId) => {
+    return {
+        type: actionTypes.LEAVE_TASK,
+        taskId,
+    }
+}
+
 export const fetchTasksAction = (userId) => {
     return dispatch => {
         dispatch(startFetchingActionCreator());
         axios.get(`/task/list/${userId}`)
             .then(tasks => {
                 dispatch(fetchTasksActionCreator(tasks.data))
+            })
+    }
+}
+
+export const leaveTaskAction = (taskId, data) => {
+    return dispatch => {
+        axios.patch(`/task/leave/${taskId}`, data)
+            .then(() => {
+                dispatch(leaveTaskActionCreator(taskId))
             })
     }
 }

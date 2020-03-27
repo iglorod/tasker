@@ -8,7 +8,7 @@ import InputElement from '../AuthElements/InputElement/InputElement';
 import TitleElement from '../AuthElements/TitleElement/TitleElement';
 import RememberMe from '../AuthElements/RememberMe/RememberMe';
 import SubmitButton from '../AuthElements/SubmitButton/SubmitButton';
-import AlertMessage from '../../UI/AlertMessage/AlertMessage';
+import AlertMessage from '../../UI/Alerts/AlertMessage/AlertMessage';
 import { signInAction } from '../../../store/actions/authorization';
 import { validation } from '../../../utility/validation';
 import classes from './SignIn.module.css';

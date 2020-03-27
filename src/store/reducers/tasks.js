@@ -17,8 +17,17 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_TASKS: {
             return {
                 ...state,
-                fetching: false,       
+                fetching: false,
                 tasks: [...action.tasks]
+            }
+        }
+
+        case actionTypes.LEAVE_TASK: {
+            const tasks = state.tasks.filter(task => task._id !== action.taskId);
+
+            return {
+                ...state,
+                tasks: [...tasks]
             }
         }
 

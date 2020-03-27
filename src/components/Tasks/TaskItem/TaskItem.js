@@ -11,7 +11,8 @@ const TaskItem = (props) => {
         <Card className={classes.cardDiv} bg={'light'} text={'dark'}>
             <TaskHeader
                 sender={props.task.sender}
-                openShareTaskModal={props.openShareTaskModal} />
+                openShareTaskModal={props.openShareTaskModal}
+                openLeaveTaskModal={props.openLeaveTaskModal} />
             <Card.Body>
                 <TaskTitle title={props.task.title} />
                 <Card.Text className={classes.cardText}>{props.task.description}</Card.Text>

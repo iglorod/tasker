@@ -3,16 +3,18 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 import axios from '../../utility/axios-instance';
-import { fetchTasksAction } from '../../store/actions/tasks';
+import { fetchTasksAction, leaveTaskAction } from '../../store/actions/tasks';
 import TaskItem from './TaskItem/TaskItem';
-import ModalSpinner from '../UI/ModalSpinner/ModalSpinner';
-import ModalPrompt from '../UI/ModalPrompt/ModalPrompt';
-import AlertDismiss from '../UI/AlertDismiss/AlertDismiss';
+import ModalSpinner from '../UI/Modals/ModalSpinner/ModalSpinner';
+import ModalPrompt from '../UI/Modals/ModalPrompt/ModalPrompt';
+import ModalConfirm from '../UI/Modals/ModalConfirm/ModalConfirm';
+import AlertResult from '../UI/Alerts/AlertResult/AlertResult';
 
 const Tasks = (props) => {
     const [loading, setLoading] = useState(true);
     const [shareModalOpen, setShareModalOpen] = useState(false);
-    const [shareTaskId, setShareTaskId] = useState();
+    const [leaveModalOpen, setLeaveModalOpen] = useState(false);
+    const [choosedTaskId, setChoosedTaskId] = useState();
     const [shareResultAlert, setShareResultAlert] = useState({});
 
     useEffect(() => {
@@ -24,14 +26,24 @@ const Tasks = (props) => {
     if (props.fetching || loading) return <ModalSpinner />;
 
 
+    const openLeaveTaskModal = (taskId) => {
+        setLeaveModalOpen(true);
+        setChoosedTaskId(taskId);
+    }
+
+    const closeLeaveTaskModal = () => {
+        setLeaveModalOpen(false);
+        setChoosedTaskId();
+    }
+
     const openShareTaskModal = (taskId) => {
         setShareModalOpen(true);
-        setShareTaskId(taskId);
+        setChoosedTaskId(taskId);
     }
 
     const closeShareTaskModal = () => {
         setShareModalOpen(false);
-        setShareTaskId({});
+        setChoosedTaskId();
     }
 
     const handleError = (error) => {
@@ -49,7 +61,7 @@ const Tasks = (props) => {
             senderId: props.userId,
         }
 
-        axios.patch(`/task/share/${shareTaskId}`, taskData)
+        axios.patch(`/task/share/${choosedTaskId}`, taskData)
             .then(() => {
                 setShareResultAlert({
                     message: 'Task sent successfully',
@@ -65,23 +77,42 @@ const Tasks = (props) => {
         setShareResultAlert({});
     }
 
+    const leaveTask = () => {
+        const data = {
+            userId: props.userId
+        }
+
+        props.leaveTask(choosedTaskId, data);
+    }
+
     return (
         <Container>
-            <ModalPrompt
+            <ModalPrompt                // Modal for sharing task
                 show={shareModalOpen}
                 title={'Share the task'}
                 placeholder={'Email'}
                 hideModal={closeShareTaskModal}
-                shareTask={shareTaskHandler} />
-            <AlertDismiss
+                onConfirm={shareTaskHandler} />
+
+            <ModalConfirm               // Modal for leaving task
+                show={leaveModalOpen}
+                title={'Leave this task?'}
+                hideModal={closeLeaveTaskModal}
+                onConfirm={leaveTask} />
+
+            <AlertResult                // Alert for report about the results of task sharing
                 result={shareResultAlert}
                 hideAlert={clearShareAlert} />
+
             <Row>
                 {
                     props.tasks.map(task => {
                         return (
                             <Col sm={6} md={4} lg={3} className={'mb-3'} key={task._id}>
-                                <TaskItem task={task} openShareTaskModal={openShareTaskModal.bind(this, task._id)} />
+                                <TaskItem
+                                    task={task}
+                                    openShareTaskModal={openShareTaskModal.bind(this, task._id)}
+                                    openLeaveTaskModal={openLeaveTaskModal.bind(this, task._id)} />
                             </Col>
                         )
                     })
@@ -101,7 +132,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchTasks: (userId) => { dispatch(fetchTasksAction(userId)) }
+        fetchTasks: (userId) => { dispatch(fetchTasksAction(userId)) },
+        leaveTask: (taskId, data) => { dispatch(leaveTaskAction(taskId, data)) }
     }
 }
 
