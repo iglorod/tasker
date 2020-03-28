@@ -9,10 +9,12 @@ import { Provider } from 'react-redux';
 
 import authReducer from './store/reducers/authorization';
 import taskReducer from './store/reducers/tasks';
+import socketReducer from './store/reducers/socket';
 
 const reducers = combineReducers({
   auth: authReducer,
   task: taskReducer,
+  sckt: socketReducer,
 })
 
 const store = createStore(reducers, applyMiddleware(thunk));

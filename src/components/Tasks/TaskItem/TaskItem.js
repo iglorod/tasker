@@ -14,7 +14,7 @@ const TaskItem = (props) => {
                 openShareTaskModal={props.openShareTaskModal}
                 openLeaveTaskModal={props.openLeaveTaskModal} />
             <Card.Body>
-                <TaskTitle title={props.task.title} />
+                <TaskTitle id={props.task._id} title={props.task.title} />
                 <Card.Text className={classes.cardText}>{props.task.description}</Card.Text>
                 <TaskFooter lastUpdateDate={props.task.lastUpdateDate} createDate={props.task.date} />
             </Card.Body>

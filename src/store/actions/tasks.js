@@ -14,6 +14,19 @@ export const fetchTasksActionCreator = (tasks) => {
     }
 }
 
+export const reciveTaskActionCreator = (data) => {
+    return {
+        type: actionTypes.RECIVE_TASK,
+        data,
+    }
+}
+
+export const clearTasksActionCreator = () => {
+    return {
+        type: actionTypes.CLEAR_TASKS,
+    }
+}
+
 export const leaveTaskActionCreator = (taskId) => {
     return {
         type: actionTypes.LEAVE_TASK,

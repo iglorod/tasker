@@ -11,5 +11,11 @@ export const LOGOUT = 'LOGOUT';
 //tasks
 export const FETCH_START = 'FETCH_START';
 export const FETCH_TASKS = 'FETCH_TASKS';
+export const RECIVE_TASK = 'RECIVE_TASK';
+export const CLEAR_TASKS = 'CLEAR_TASKS';
 export const LEAVE_TASK = 'LEAVE_TASK';
+
+//socket.io
+export const CONNECT_SOCKET = 'CONNECT_SOCKET';
+export const DISCONNECT_SOCKET = 'DISCONNECT_SOCKET';
 

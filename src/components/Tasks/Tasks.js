@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import axios from '../../utility/axios-instance';
-import { fetchTasksAction, leaveTaskAction } from '../../store/actions/tasks';
 import TaskItem from './TaskItem/TaskItem';
 import ModalSpinner from '../UI/Modals/ModalSpinner/ModalSpinner';
 import ModalPrompt from '../UI/Modals/ModalPrompt/ModalPrompt';
 import ModalConfirm from '../UI/Modals/ModalConfirm/ModalConfirm';
-import AlertResult from '../UI/Alerts/AlertResult/AlertResult';
+import AlertMessage from '../UI/AlertMessage/AlertMessage';
+import {
+    fetchTasksAction,
+    leaveTaskAction,
+    clearTasksActionCreator,
+    reciveTaskActionCreator
+} from '../../store/actions/tasks';
 
 const Tasks = (props) => {
     const [loading, setLoading] = useState(true);
@@ -20,9 +26,20 @@ const Tasks = (props) => {
     useEffect(() => {
         props.fetchTasks(props.userId);
         setLoading(false);
+
+        props.socket.on('recive-shared-task', (data) => {
+            console.log('revive task');
+            if (data.to === props.userEmail) props.reciveTask(data);
+        });
+
+        return () => {
+            props.socket.removeListener('recive-shared-task');
+            props.clearTasksList();
+        }
     }, [])
 
 
+    if (!props.userId) return <Redirect to={'/sign-in'} />
     if (props.fetching || loading) return <ModalSpinner />;
 
 
@@ -53,11 +70,11 @@ const Tasks = (props) => {
         });
     }
 
-    const shareTaskHandler = (userEmail) => {
+    const shareTaskHandler = (reciverEmail) => {
         setShareResultAlert({});
 
         const taskData = {
-            email: userEmail,
+            email: reciverEmail,
             senderId: props.userId,
         }
 
@@ -67,6 +84,10 @@ const Tasks = (props) => {
                     message: 'Task sent successfully',
                     error: false
                 })
+
+                const sharedTask = props.tasks.find(task => task._id === choosedTaskId);
+
+                props.socket.emit('share-task', props.userEmail, reciverEmail, sharedTask);  // (event, from, to, data) 
             })
             .catch(error => {
                 handleError(error);
@@ -100,7 +121,7 @@ const Tasks = (props) => {
                 hideModal={closeLeaveTaskModal}
                 onConfirm={leaveTask} />
 
-            <AlertResult                // Alert for report about the results of task sharing
+            <AlertMessage                // Alert for report about the results of task sharing
                 result={shareResultAlert}
                 hideAlert={clearShareAlert} />
 
@@ -127,12 +148,16 @@ const mapStateToProps = state => {
         fetching: state.task.fetching,
         tasks: state.task.tasks,
         userId: state.auth.id,
+        userEmail: state.auth.email,
+        socket: state.sckt.socket,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         fetchTasks: (userId) => { dispatch(fetchTasksAction(userId)) },
+        clearTasksList: () => { dispatch(clearTasksActionCreator()) },
+        reciveTask: (data) => { dispatch(reciveTaskActionCreator(data)) },
         leaveTask: (taskId, data) => { dispatch(leaveTaskAction(taskId, data)) }
     }
 }

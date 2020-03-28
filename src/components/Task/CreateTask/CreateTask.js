@@ -9,7 +9,7 @@ import Description from '../TaskComponents/Description/Description';
 import Instructions from '../TaskComponents/Instructions/Instructions';
 import Button from '../TaskComponents/Button/Button';
 import ColHOC from '../../UI/ColHOC/ColHOC';
-import AlertMessage from '../../UI/Alerts/AlertMessage/AlertMessage';
+import AlertMessage from '../../UI/AlertMessage/AlertMessage';
 import classes from './CreateTask.module.css';
 
 const CreateTask = (props) => {
@@ -20,7 +20,7 @@ const CreateTask = (props) => {
     })
 
     const [savingTask, setSavingTask] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(null);
+    const [resultMessage, setResultMessage] = useState({});
 
     if (!props.userId) return <Redirect to={'/sign-in'} />
 
@@ -70,12 +70,15 @@ const CreateTask = (props) => {
         })
     }
 
+    const hideAlert = () => {
+        setResultMessage({});
+    }
+
     const validateTask = () => {
         let isValid = true;
 
         for (let key in task) {
             if (key === 'instructions') {
-                console.log(task[key])
                 const arr = clearArray(task[key]);
                 isValid = arr.length > 0 && isValid;
             } else {
@@ -87,7 +90,6 @@ const CreateTask = (props) => {
     }
 
     const clearArray = (arr) => {
-        console.log(arr);
         return arr.filter(item => item.trim().length > 0);
     }
 
@@ -107,27 +109,28 @@ const CreateTask = (props) => {
 
     const createRecipeHandler = () => {
         if (!validateTask()) {
-            setErrorMessage('Please fill all fields & upload image');
+            setResultMessage({
+                message: 'Please fill all fields',
+                error: true,
+            });
             return;
         }
 
         setSavingTask(true);
-        setErrorMessage(null);
+        setResultMessage({});
 
         const taskData = formTask();
 
         axios.post('/task', taskData)
             .then(() => {
-                props.history.push({
-                    pathname: '/',
-                    //state: {
-                    // recipeId: recipe.data._id,
-                    // }
-                })
+                props.history.push('/');
             })
             .catch(error => {
                 setSavingTask(false);
-                setErrorMessage('Something went wrong...')
+                setResultMessage({
+                    message: 'Something went wrong...',
+                    error: true
+                })
             })
     }
 
@@ -139,6 +142,7 @@ const CreateTask = (props) => {
                     <Row className={classes.inputsBlock}>
                         <ColHOC>
                             <Title
+                                mainTitle={'Create Task'}
                                 value={task.title}
                                 onChange={onTextChangeHandler} />
                         </ColHOC>
@@ -158,7 +162,7 @@ const CreateTask = (props) => {
                         </ColHOC>
 
                         <ColHOC>
-                            <AlertMessage errorMessage={errorMessage} />
+                            <AlertMessage result={resultMessage} hideAlert={hideAlert} />
                         </ColHOC>
 
                         <ColHOC>

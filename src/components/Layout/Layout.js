@@ -12,10 +12,12 @@ import ModalSpinner from '../UI/Modals/ModalSpinner/ModalSpinner';
 import { autoLogin } from '../../utility/auto-login';
 import { signInLocalAction, refreshTokenAction } from '../../store/actions/authorization';
 import { finishLoadingActionCreator } from '../../store/actions/authorization';
+import { connectSocketActionCreator } from '../../store/actions/socket';
 
 const Layout = (props) => {
     useEffect(() => {
         autoLogin(props.refreshTokenAndSignIn, props.signInByLocalData, props.finishLoading);
+        props.connectSocket();
     }, [])
 
     if (props.loading) return <ModalSpinner />;
@@ -43,7 +45,8 @@ const mapDispatchToProps = dispatch => {
     return {
         signInByLocalData: () => { dispatch(signInLocalAction()) },
         refreshTokenAndSignIn: (token) => { dispatch(refreshTokenAction(token)) },
-        finishLoading: () => { dispatch(finishLoadingActionCreator()) }
+        finishLoading: () => { dispatch(finishLoadingActionCreator()) },
+        connectSocket: () => { dispatch(connectSocketActionCreator()) },
     }
 }
 

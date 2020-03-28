@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDoorOpen, faEllipsisV, faShareSquare } from '@fortawesome/free-solid-svg-icons';
@@ -6,8 +6,6 @@ import { faDoorOpen, faEllipsisV, faShareSquare } from '@fortawesome/free-solid-
 import classes from './TaskMenu.module.css';
 
 const TaskMenu = (props) => {
-    const [showPopover, setShowPopover] = useState(false);
-
     const clickHandler = (func, event) => {
         event.stopPropagation();
         func();

@@ -4,13 +4,16 @@ import { Card } from 'react-bootstrap';
 
 import classes from './TaskTitle.module.css';
 
-const TaskTitle = ({ title }) => {
+const TaskTitle = ({ id, title }) => {
     return (
         <Card.Title className={classes.cardTitle}>
-            <Link to={'/#'}>
+            <Link to={{
+                pathname: '/edit-task',
+                state: { taskId: id }
+            }}>
                 {title}
             </Link>
-        </Card.Title>
+        </Card.Title >
 
     )
 }

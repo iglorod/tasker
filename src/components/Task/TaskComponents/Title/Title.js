@@ -6,7 +6,7 @@ import classes from '../TaskComponents.module.css';
 const TaskTitle = (props) => {
     return (
         <React.Fragment>
-            <h3 className={classes.createTaskLabel}>Create Task</h3>
+            <h3 className={classes.createTaskLabel}>{props.mainTitle}</h3>
             <h4 className={classes.label}>Title</h4>
             <FormControl
                 value={props.value}
