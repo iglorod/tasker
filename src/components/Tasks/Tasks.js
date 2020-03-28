@@ -24,14 +24,15 @@ const Tasks = (props) => {
     const [shareResultAlert, setShareResultAlert] = useState({});
 
     useEffect(() => {
-        props.fetchTasks(props.userId);
-        setLoading(false);
+        if (props.userId) {
+            props.fetchTasks(props.userId);
+            setLoading(false);
 
-        props.socket.on('recive-shared-task', (data) => {
-            console.log('revive task');
-            if (data.to === props.userEmail) props.reciveTask(data);
-        });
-
+            props.socket.on('recive-shared-task', (data) => {
+                console.log('revive task');
+                if (data.to === props.userEmail) props.reciveTask(data);
+            });
+        }
         return () => {
             props.socket.removeListener('recive-shared-task');
             props.clearTasksList();
